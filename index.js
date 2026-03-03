@@ -52,12 +52,19 @@ function processCommand(command) {
                 }
             }
             break;
+        case 'sort importance':
+            let com_s = comments.slice()
+            com_s.sort((a, b) => -(a.split("!").length) + (b.split("!").length))
+            for (const line of com_s) {
+                console.log(line)
+            }
+            break;
         default:
             if (command.startsWith('user')) {
                 const name = command.split(' ')[1]
                 for (const line of comments) {
                     const nameExpected = line.split(';')[0].split(' ').at(-1);
-                    if (nameExpected === name) {
+                    if (nameExpected.toLowerCase() === name.toLowerCase()) {
                         console.log(line)
                     }
                 }
