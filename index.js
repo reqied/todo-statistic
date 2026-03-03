@@ -2,6 +2,31 @@ const {getAllFilePathsWithExtension, readFile} = require('./fileSystem');
 const {readLine} = require('./console');
 
 const files = getFiles();
+const comments = [];
+
+for (const file of files) {
+    let line = "";
+    let comm = false;
+    for (let i = 0; i < file.length - 1; i++) {
+        if (file[i] === '/' && file[i+1] === '/') {
+            comm = true;
+        }
+        if (comm === true) {
+            line = line + file[i];
+        }
+
+        if (file[i] === '\n' && line !== "") {
+
+            comments.push(line);
+            line = "";
+            comm = false;
+        }
+    }
+    if (comm === true) {
+        comments.push(line);
+    }
+}
+console.log(comments)
 
 console.log('Please, write your command!');
 readLine(processCommand);
