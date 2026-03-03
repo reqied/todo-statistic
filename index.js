@@ -35,6 +35,25 @@ function getFiles() {
     return filePaths.map(path => readFile(path));
 }
 
+function compareDate(a, b){
+    if (a.split(';').length == 0)
+        return 1;
+    if (b.split(';').length == 0)
+        return -1;
+
+    let a_date = new Date(a.split(';')[1]);
+    let b_date = new Date(b.split(';')[1]);
+
+    if (a_date < b_date)
+        return 1
+    if (b_date < a_date)
+        return -1
+    return 0
+
+}
+
+compareDate('b; 2018-08-16', 'a; 2018-09-21')
+
 function processCommand(command) {
     switch (command) {
         case 'exit':
@@ -66,7 +85,13 @@ function processCommand(command) {
                 console.log(line)
             }
             break;
-
+        case 'sort date':
+            let com_d = comments.slice()
+            com_d.sort((a, b) => (compareDate(a, b)))
+            for (const line of com_d) {
+                console.log(line)
+            }
+            break;
         default:
             if (command.startsWith('user')) {
                 const name = command.split(' ')[1]
