@@ -41,8 +41,15 @@ function processCommand(command) {
             process.exit(0);
             break;
         case 'show':
-            for (line of comments) {
+            for (const line of comments) {
                 console.log(line)
+            }
+            break;
+        case 'important':
+            for (const line of comments) {
+                if (line.includes("!")) {
+                    console.log(line)
+                }
             }
             break;
         default:
