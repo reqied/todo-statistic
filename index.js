@@ -53,6 +53,16 @@ function processCommand(command) {
             }
             break;
         default:
+            if (command.startsWith('user')) {
+                const name = command.split(' ')[1]
+                for (const line of comments) {
+                    const nameExpected = line.split(';')[0].split(' ').at(-1);
+                    if (nameExpected === name) {
+                        console.log(line)
+                    }
+                }
+                break;
+            }
             console.log('wrong command');
             break;
     }
