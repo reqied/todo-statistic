@@ -103,6 +103,21 @@ function processCommand(command) {
                 }
                 break;
             }
+            if (command.startsWith('date')) {
+                let date_1 = new Date(command.split(' ')[1])
+                for (const line of comments) {
+                    let date_2 = line.split(';');
+                    if (date_2.length <= 1) {
+                        break;
+                    }
+                    date_2 = new Date(date_2[1])
+                    if (date_1 < date_2)
+                    {
+                        console.log(line)
+                    }
+                }
+                break;
+            }
             console.log('wrong command');
             break;
     }
