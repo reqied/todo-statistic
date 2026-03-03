@@ -5,25 +5,25 @@ const files = getFiles();
 const comments = [];
 
 for (const file of files) {
-    let line = "";
+    let line = [];
     let comm = false;
     for (let i = 0; i < file.length - 1; i++) {
         if (file[i] === '/' && file[i+1] === '/') {
             comm = true;
         }
         if (comm === true) {
-            line = line + file[i];
+            line.push(file[i]);
         }
 
-        if (file[i] === '\n' && line !== "") {
+        if (file[i] === '\n' && line.length > 0) {
 
-            comments.push(line);
-            line = "";
+            comments.push(line.join(''));
+            line = [];
             comm = false;
         }
     }
     if (comm === true) {
-        comments.push(line);
+        comments.push(line.join(''));
     }
 }
 
@@ -52,7 +52,26 @@ function compareDate(a, b){
 
 }
 
-compareDate('b; 2018-08-16', 'a; 2018-09-21')
+function printComment(line){
+    let prior = line.split("!").length - 1;
+    let sp_line = line.split(";");
+    let user = ""
+    let date = ""
+    let text = ""
+    if (sp_line.length > 1) {
+        user = sp_line[0].split(" ")[2];
+        date = sp_line[1];
+        text = sp_line[2];
+    }
+    else {
+        text = line.split(" ").slice(2).join(" ")
+    }
+    if (prior > 1){
+        console.log("\u2026", " | ", user.padEnd(10, " "), " | ", date.padEnd(10, " "), " | ", text.padEnd(50, " "))
+        return
+    }
+    console.log("!".repeat(prior).padEnd(1, " "), " | ", user.padEnd(10, " "), " | ", date.padEnd(10, " "), " | ", text.padEnd(50, " "))
+}
 
 function processCommand(command) {
     switch (command) {
@@ -61,7 +80,7 @@ function processCommand(command) {
             break;
         case 'show':
             for (const line of comments) {
-                console.log(line)
+                printComment(line)
             }
             break;
         case 'important':
