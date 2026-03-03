@@ -59,6 +59,14 @@ function processCommand(command) {
                 console.log(line)
             }
             break;
+        case 'sort user':
+            let com_n = comments.slice()
+            com_n.sort((a, b) => (a.split(';')[0].localeCompare(b.split(';')[0])))
+            for (const line of com_n) {
+                console.log(line)
+            }
+            break;
+
         default:
             if (command.startsWith('user')) {
                 const name = command.split(' ')[1]
