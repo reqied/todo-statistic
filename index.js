@@ -26,7 +26,6 @@ for (const file of files) {
         comments.push(line);
     }
 }
-console.log(comments)
 
 console.log('Please, write your command!');
 readLine(processCommand);
@@ -40,6 +39,11 @@ function processCommand(command) {
     switch (command) {
         case 'exit':
             process.exit(0);
+            break;
+        case 'show':
+            for (line of comments) {
+                console.log(line)
+            }
             break;
         default:
             console.log('wrong command');
